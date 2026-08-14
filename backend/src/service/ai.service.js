@@ -21,8 +21,6 @@ const r1 = readline.createInterface({
   output: process.stdout,
 });
 
-// 🎯 Stock/Crypto Quote Tool — exact live number, JS-rendered price ka
-// text-search se milna reliable nahi hota, isliye alag dedicated tool
 const stockQuoteTool = tool(
   async ({ ticker }) => {
     const quote = await getStockQuote(ticker);
@@ -76,8 +74,6 @@ const mistraAiModel = new ChatMistralAI({
   apiKey: process.env.MISTRAL_API_KEY,
 });
 
-// Function banaya taaki har request pe AAJ ki real date fresh inject ho —
-// warna model kabhi kabhi galat saal assume kar leta hai
 const getSystemPrompt = () => {
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
