@@ -77,7 +77,7 @@ const ChatScreen = () => {
   };
 
   useEffect(() => {
-    if (id) {
+    if (id && id !== isActiveChatId) {
       loadMessages(id);
     }
   }, [id]);

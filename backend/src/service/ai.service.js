@@ -75,20 +75,32 @@ const mistraAiModel = new ChatMistralAI({
 });
 
 const getSystemPrompt = () => {
-  const today = new Date().toLocaleDateString("en-US", {
+   const now = new Date();
+  
+  const today = now.toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  return `You are a smart AI research agent. You have one main power: you can search
-the internet using the search tool to research any latest topic. Use it wisely based on user requests.
+  const currentTimeIST = now.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  });
 
-TODAY'S DATE IS: ${today}. Always use THIS exact date (and year) when calculating "latest", "this week",
-"past N days", or any relative date range. NEVER guess or assume the year from your own training data —
-use the year given above, even if it feels unfamiliar. Double-check every date range you write against
-this date before finalizing your answer.
+  return `You are a smart AI research agent. ...
+
+TODAY'S DATE IS: ${today}.
+CURRENT TIME IN INDIA (IST) IS: ${currentTimeIST}.
+If the user asks for the current date or time, use THESE EXACT VALUES directly. NEVER guess, 
+estimate, or calculate the time yourself — always state precisely what is given above. If the 
+user asks for time in a different timezone, convert mathematically from this IST value, don't 
+guess a new one.
+
+...rest of your existing rules...
 
 CITATION RULES — follow these exactly:
 1. Only add citation markers for facts that came from searchInternetTool — NEVER add a [n] marker for
